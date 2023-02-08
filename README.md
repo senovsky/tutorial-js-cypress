@@ -20,7 +20,7 @@ npx cypress run
 ## Submitting results to Jira
 
 Results can be submitted to Jira so that they can be shared with the team and their impacts be easily analysed.
-This can be achieved using [Xray Test Management](https://www.getxray.app/) as shown in further detail in this [tutorial](https://docs.getxray.app/display/XRAYCLOUD/Testing+web+applications+using+Cypress).
+This can be achieved using [Xray Test Management](https://www.getxray.app/) as shown in further detail in this [tutorial for Xray Cloud](https://docs.getxray.app/display/XRAYCLOUD/Testing+web+applications+using+Cypress).
 
 ## Contact
 
@@ -29,10 +29,10 @@ For Xray specific questions, please contact [Xray's support team](https://jira.g
 
 ## References
 
-- [Cypress test](https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test)
+- [Writing Your First E2E Test tutorial by Cypress](https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Cypress](https://cypress.io/)
 - [How Xray processes JUnit XML reports](https://docs.getxray.app/display/XRAYCLOUD/Taking+advantage+of+JUnit+XML+reports)
-- [Using cypress junit reporter](https://docs.cypress.io/guides/tooling/reporters)
+- [Using Cypress JUnit reporter](https://docs.cypress.io/guides/tooling/reporters)
 - [Cypress todo example](https://example.cypress.io/todo)
 
 
