@@ -58,15 +58,15 @@ jobs:
            projectKey: "${{ inputs.projectKey }}"
            testEnvironments: "NODE_${{ matrix.node-version }}"
 
-    - name: "Import results to Xray"
-      uses: mikepenz/xray-action@v2.4.5
-      with:
-         username: ${{ secrets.JIRA_USERNAME }}
-         password: ${{ secrets.JIRA_PASSWORD }}
-         xrayCloud: "false"
-         xrayBaseUrl: ${{ secrets.JIRA_BASEURL }}
-         testFormat: "junit"
-         testPaths: "**/xray-report.xml"
-         testPlanKey: "${{ inputs.testPlanKey }}"
-         projectKey: "${{ inputs.projectKey }}"
-         testEnvironments: "NODE_${{ matrix.node-version }}"
+      - name: "Import results to Xray"
+        uses: mikepenz/xray-action@v2.4.5
+        with:
+           username: ${{ secrets.JIRA_USERNAME }}
+           password: ${{ secrets.JIRA_PASSWORD }}
+           xrayCloud: "false"
+           xrayBaseUrl: ${{ secrets.JIRA_BASEURL }}
+           testFormat: "junit"
+           testPaths: "**/xray-report.xml"
+           testPlanKey: "${{ inputs.testPlanKey }}"
+           projectKey: "${{ inputs.projectKey }}"
+           testEnvironments: "NODE_${{ matrix.node-version }}"
