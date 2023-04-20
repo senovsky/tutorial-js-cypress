@@ -1,0 +1,72 @@
+name: CI
+
+# Controls when the action will run. 
+on:
+  workflow_dispatch:
+    inputs:
+      testPlanKey:
+        description: 'TestPlan key from Xray'
+        default: ''
+        required: true
+        type: string
+      projectKey:
+        description: 'Project key from Xray'
+        default: ''
+        required: true
+        type: string
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  # This workflow contains a single job called "test"
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Output Inputs
+        run: echo "${{ toJSON(github.event.inputs) }}"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Run install
+        run: |
+          npm install cypress
+          npm install mocha-junit-reporter
+      - name: Run tests
+        run: npm test
+      - name: debug JUnit XML report
+        run: cat results/todo-results.xml
+      - name: "Import results to Xray (server/DC) using a GH action"
+        uses: mikepenz/xray-action@v2.4.5
+        with:
+           username: "${{ secrets.JIRASERVER_USERNAME }}"
+           password: "${{ secrets.JIRASERVER_PASSWORD }}"
+           xrayCloud: "false"
+           xrayBaseUrl: "${{ secrets.JIRASERVER_BASE_URL }}"
+           testFormat: "junit"
+           testPaths: "**/results/*.xml"
+           testPlanKey: "${{ inputs.testPlanKey }}"
+           projectKey: "${{ inputs.projectKey }}"
+           testEnvironments: "NODE_${{ matrix.node-version }}"
+
+    - name: "Import results to Xray"
+      uses: mikepenz/xray-action@v2.4.5
+      with:
+         username: ${{ secrets.JIRA_USERNAME }}
+         password: ${{ secrets.JIRA_PASSWORD }}
+         xrayCloud: "false"
+         xrayBaseUrl: ${{ secrets.JIRA_BASEURL }}
+         testFormat: "junit"
+         testPaths: "**/xray-report.xml"
+         testPlanKey: "${{ inputs.testPlanKey }}"
+         projectKey: "${{ inputs.projectKey }}"
+         testEnvironments: "NODE_${{ matrix.node-version }}"
