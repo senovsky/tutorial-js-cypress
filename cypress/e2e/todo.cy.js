@@ -5,7 +5,7 @@ describe('example to-do app', () => {
     cy.visit(Cypress.config('baseUrl'))
   })
 
-  it('can add new todo items', () => {
+  it.only('pass - can add new todo items', () => {
     const newItem = 'Feed the cat'
     cy.get('[data-test=new-todo]').type(`${newItem}{enter}`)
 
@@ -15,7 +15,7 @@ describe('example to-do app', () => {
       .should('have.text', newItem)
   })
 
-  it('can check an item as completed', () => {
+  it.only('fail - can check an item as completed', () => {
     cy.contains('Pay electric bill')
       .parent()
       .find('input[type=checkbox]')
@@ -23,7 +23,7 @@ describe('example to-do app', () => {
 
     cy.contains('Pay electric bill')
       .parents('li')
-      .should('have.class', 'completed')
+      .should('have.class', 'completedd')
   })
 
   context('with a checked task', () => {
